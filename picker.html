@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>picker</title>
+    </head>
+    <style>
+     input{
+         width: 40px;
+         border: 2px solid black
+     }
+    </style>
+
+<body>
+    <p style="text-align: center;font-size: 2em"><strong>GLSID2</strong></p>
+    <svg id="svg" width="1000" height="300"></svg>    
+<script>    
+    var svg = document.getElementById('svg');
+    var svgNS = svg.namespaceURI;
+    var i=0;
+
+//on fait une boucles de 100 iterations sur i car il va jouer le role de 'h' de hsl qui commence de 0 et qui se termine par 240
+var S=100;
+var L=50;
+
+    for(i=0;i<240;i++){
+        var rect = document.createElementNS(svgNS,'rect');
+        rect.setAttribute('x',svg.getAttribute('width')/2);
+        rect.setAttribute('y',(1+i));
+        rect.setAttribute('width',30);
+        rect.setAttribute('height',1);
+        rect.setAttribute('stroke-width',0.2);
+        rect.setAttribute('fill','hsl('+i+','+S+'%, '+L+'%)');
+        rect.setAttribute('onclick','f1('+i+','+S+','+L+')');
+        svg.appendChild(rect); 
+        console.log      
+    }
+   
+   //on fait deux boucles de 100 iterations sur i et j car dans le model de color hsl 's' commence de 0 jusqu'a 100 et la meme chose pour 'l'
+   for(i=0;i<=100;i++){
+        for(j=0;j<=100;j++){
+        var rect = document.createElementNS(svgNS,'rect');
+        rect.setAttribute('x',2.5*(i+1));
+        rect.setAttribute('y',2.5*(1+j));
+        rect.setAttribute('width',3);
+        rect.setAttribute('height',3);
+        rect.setAttribute('id','i'+i+'j'+j);
+        rect.setAttribute('fill','hsl(0, '+i+'%, '+j+'%)');
+        svg.appendChild(rect);        
+        }     
+    }
+
+    document.body.appendChild(svg);
+
+function f1(Hcolor,Scolor,Lcolor){
+    var i;
+    var H=document.getElementById('H');
+    var S=document.getElementById('S');
+    var L=document.getElementById('L');
+    for(i=0;i<=100;i++){
+        for(j=0;j<=100;j++){
+        var rect = document.getElementById('i'+i+'j'+j);
+        rect.setAttribute('fill','hsl('+Hcolor+', '+i+'%, '+j+'%)');
+        }     
+    }
+       H.value=Hcolor;
+        S.value=Scolor;
+        L.value=Lcolor;
+}
+</script>
+
+<p>H<input id="H" value="0"/>  S<input id="S" value="100"/>  L<input id="L" value="100"/></p>
+
+</body>
+</html>
